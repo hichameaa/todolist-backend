@@ -24,7 +24,6 @@ public class TodoDto {
 
     private boolean favorite;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private CategoryDto category;
 
     public static Todo toEntity(TodoDto todoDto) {
