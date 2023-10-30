@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Entity class representing a category.
+ * This class maps to the "category" table in the database and contains attributes
+ * for category information, such as name, description, creation date, and associated user and to-do items.
+ */
 @Entity
 @Data
 @NoArgsConstructor

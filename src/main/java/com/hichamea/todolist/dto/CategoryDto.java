@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A Data Transfer Object (DTO) representing a category.
+ * This class contains attributes for category information and conversion methods to and from the corresponding entity.
+ */
 @Data
 @Builder
 public class CategoryDto {
@@ -23,6 +27,12 @@ public class CategoryDto {
 
     private List<TodoDto> todoList;
 
+    /**
+     * Converts a CategoryDto object to a Category entity.
+     *
+     * @param categoryDto The CategoryDto object to convert.
+     * @return The corresponding Category entity.
+     */
     public static Category toEntity(CategoryDto categoryDto) {
         Category category = new Category();
         category.setUser(UserDto.toEntity(categoryDto.getUser()));
@@ -33,6 +43,12 @@ public class CategoryDto {
         return category;
     }
 
+    /**
+     * Converts a Category entity to a CategoryDto object.
+     *
+     * @param category The Category entity to convert.
+     * @return The corresponding CategoryDto object.
+     */
     public static CategoryDto fromEntity(Category category) {
         return CategoryDto.builder()
                           .id(category.getId())
