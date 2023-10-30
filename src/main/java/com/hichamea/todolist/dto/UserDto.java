@@ -40,7 +40,10 @@ public class UserDto {
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setCategory(
-                userDto.getCategory() != null ? userDto.getCategory().stream().map(CategoryDto::toEntity).collect(Collectors.toList()) : null
+                userDto.getCategory() != null ? userDto.getCategory()
+                                                       .stream()
+                                                       .map(CategoryDto::toEntity)
+                                                       .collect(Collectors.toList()) : null
         );
 
         return user;
@@ -55,7 +58,10 @@ public class UserDto {
                       .password(user.getPassword())
                       .email(user.getEmail())
                       .category(
-                              user.getCategory() != null ? user.getCategory().stream().map(CategoryDto::fromEntity).collect(Collectors.toList()) : null
+                              user.getCategory() != null ? user.getCategory()
+                                                               .stream()
+                                                               .map(CategoryDto::fromEntity)
+                                                               .collect(Collectors.toList()) : null
                       )
                       .build();
     }

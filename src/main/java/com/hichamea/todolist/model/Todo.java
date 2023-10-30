@@ -18,22 +18,22 @@ public class Todo {
 
     @Id
     @GeneratedValue
-    @Column(name= "todo_id")
+    @Column(name = "todo_id")
     private long id;
 
-    @Column(name= "title")
+    @Column(name = "title")
     private String title;
 
-    @Column(name= "description")
+    @Column(name = "description")
     private String description;
 
-    @Column(name= "start_date")
+    @Column(name = "start_date")
     private ZonedDateTime startDate;
 
-    @Column(name= "done")
+    @Column(name = "done")
     private boolean done;
 
-    @Column(name= "favorite")
+    @Column(name = "favorite")
     private boolean favorite;
 
     @Column(name = "created_date", nullable = false, updatable = false)
