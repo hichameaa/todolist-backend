@@ -24,11 +24,9 @@ public class OpenAPIConfig {
         Server devServer = createServer(devUrl, "Server URL in Development environment");
         Server prodServer = createServer(prodUrl, "Server URL in Production environment");
 
-        return new OpenAPI().info(new Info()
-                                    .title("ToDo List API")
-                                    .description("ToDo List management API")
-                                    .version("1.0"))
-                            .servers(List.of(devServer, prodServer));
+        return new OpenAPI().info(new Info().title("ToDo List API")
+                                            .description("ToDo List management API")
+                                            .version("1.0")).servers(List.of(devServer, prodServer));
     }
 
     private Server createServer(String url, String description) {

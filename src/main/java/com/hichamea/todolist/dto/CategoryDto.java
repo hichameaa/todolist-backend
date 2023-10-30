@@ -25,7 +25,6 @@ public class CategoryDto {
 
     public static Category toEntity(CategoryDto categoryDto) {
         Category category = new Category();
-
         category.setUser(UserDto.toEntity(categoryDto.getUser()));
         category.setId(categoryDto.getId());
         category.setName(categoryDto.getName());
@@ -40,7 +39,10 @@ public class CategoryDto {
                           .name(category.getName())
                           .description(category.getDescription())
                           .todoList(
-                                  category.getTodoList() != null ? category.getTodoList().stream().map(TodoDto::fromEntity).collect(Collectors.toList()) : null
+                                  category.getTodoList() != null ? category.getTodoList()
+                                                                           .stream()
+                                                                           .map(TodoDto::fromEntity)
+                                                                           .collect(Collectors.toList()) : null
                           )
                           .build();
     }

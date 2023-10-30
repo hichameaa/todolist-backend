@@ -19,6 +19,7 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> authenticate(@RequestBody UserDto user) {
         return new ResponseEntity<>(authenticationService.authenticate(user), HttpStatus.OK);

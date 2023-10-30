@@ -18,13 +18,13 @@ public class Category {
 
     @Id
     @GeneratedValue
-    @Column(name= "category_id")
+    @Column(name = "category_id")
     private long id;
 
-    @Column(name= "name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name= "description")
+    @Column(name = "description")
     private String description;
 
     @Column(name = "created_date", nullable = false, updatable = false)
