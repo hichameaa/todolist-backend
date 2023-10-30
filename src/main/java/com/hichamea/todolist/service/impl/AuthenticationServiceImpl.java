@@ -8,16 +8,33 @@ import com.hichamea.todolist.exception.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service implementation for user authentication.
+ * This class provides the implementation for the authentication of users based on their credentials.
+ */
 @Service
 @Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserRepository userRepository;
 
+    /**
+     * Constructs an instance of AuthenticationServiceImpl with the provided UserRepository.
+     *
+     * @param userRepository The UserRepository used for user authentication.
+     */
     public AuthenticationServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Authenticate a user based on the provided UserDto.
+     *
+     * @param user The UserDto containing user credentials.
+     * @return A UserDto representing the authenticated user.
+     * @throws InvalidEntityException  If the provided UserDto is null.
+     * @throws EntityNotFoundException If user authentication fails due to incorrect credentials.
+     */
     @Override
     public UserDto authenticate(UserDto user) {
         if (user == null) {

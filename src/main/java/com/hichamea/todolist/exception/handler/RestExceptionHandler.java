@@ -15,10 +15,20 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
+/**
+ * Global exception handling for REST endpoints.
+ * This class provides centralized error handling for exceptions that may occur in REST endpoints.
+ */
 @RestControllerAdvice
 @Slf4j
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    /**
+     * Handle exceptions of type EntityNotFoundException and return an error response.
+     *
+     * @param exception The EntityNotFoundException that occurred.
+     * @return ResponseEntity with an error response and HTTP status.
+     */
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleException(EntityNotFoundException exception) {
 
@@ -32,6 +42,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Handle exceptions of type InvalidEntityException and return an error response.
+     *
+     * @param exception The InvalidEntityException that occurred.
+     * @return ResponseEntity with an error response and HTTP status.
+     */
     @ExceptionHandler(InvalidEntityException.class)
     public ResponseEntity<ErrorResponse> handleException(InvalidEntityException exception) {
 

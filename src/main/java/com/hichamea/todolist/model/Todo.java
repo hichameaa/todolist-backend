@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+/**
+ * Entity class representing a to-do item.
+ * This class maps to the "todo" table in the database and contains attributes
+ * for to-do item information, such as title, description, start date, completion status, and category.
+ */
 @Entity
 @Data
 @NoArgsConstructor

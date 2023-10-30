@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Entity class representing a user.
+ * This class maps to the "users" table in the database and contains attributes for user information,
+ * including first name, last name, email, username, and password.
+ */
 @Entity
 @Data
 @NoArgsConstructor
