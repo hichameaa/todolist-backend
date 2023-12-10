@@ -5,8 +5,11 @@ import com.hichamea.todolist.exception.InvalidEntityException;
 import com.hichamea.todolist.repository.UserRepository;
 import com.hichamea.todolist.service.AuthenticationService;
 import com.hichamea.todolist.exception.EntityNotFoundException;
+import com.hichamea.todolist.validator.UserValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Service implementation for user authentication.
@@ -37,8 +40,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Override
     public UserDto authenticate(UserDto user) {
-        if (user == null) {
-            throw new InvalidEntityException("User object is null");
+        List<String> validationMessages = UserValidator.validateUserAuthenticationFields(user);
+
+        if (!validationMessages.isEmpty()) {
+            log.error("Authentication failed due to validation errors: {}", validationMessages);
+            throw new InvalidEntityException("User validation failed");
         }
         return userRepository.findUserByEmailAndPassword(user.getEmail(), user.getPassword())
                              .map(UserDto::fromEntity)
