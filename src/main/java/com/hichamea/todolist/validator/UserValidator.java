@@ -43,6 +43,32 @@ public class UserValidator {
     }
 
     /**
+     * Validates the required fields of the UserDto object for authentication.
+     *
+     * @param user The UserDto object to validate.
+     * @return A list of error messages, or an empty list if validation succeeds.
+     */
+    public static List<String> validateUserAuthenticationFields(UserDto user) {
+        List<String> errors = new ArrayList<>();
+
+        // Check if the UserDto object is null
+        if (user == null) {
+            errors.add("User object is null");
+            return errors;
+        }
+
+        // Validate the required fields of the user
+        errors.addAll(Stream.of(
+                                    validateRequiredField("User Email", user.getEmail()),
+                                    validateRequiredField("User Password", user.getPassword())
+                            )
+                            .filter(Objects::nonNull)
+                            .toList());
+
+        return errors;
+    }
+
+    /**
      * Validates that a required field is not empty.
      *
      * @param fieldName The name of the field to validate.
