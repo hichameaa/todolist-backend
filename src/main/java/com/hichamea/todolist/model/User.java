@@ -50,4 +50,16 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Category> category;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = new Date();
+        updatedDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = new Date();
+    }
 }
