@@ -64,7 +64,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(Long userId, UserDto updatedUserDto) {
-
         List<String> validationMessages = UserValidator.validateUserFields(updatedUserDto);
 
         if (!validationMessages.isEmpty()) {
@@ -84,8 +83,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long userId) {
-        Objects.requireNonNull(userId, "User ID cannot be null");
         log.warn("Attempting to delete user with ID: {}", userId);
+
+        if (!userRepository.existsById(userId)) {
+            log.warn("User with ID {} not found. Deletion skipped.", userId);
+            return;
+        }
+
         userRepository.deleteById(userId);
         log.info("User with ID {} successfully deleted.", userId);
     }
