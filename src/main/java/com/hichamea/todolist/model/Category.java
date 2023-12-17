@@ -47,4 +47,16 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private List<Todo> todoList;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = new Date();
+        updatedDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = new Date();
+    }
 }
