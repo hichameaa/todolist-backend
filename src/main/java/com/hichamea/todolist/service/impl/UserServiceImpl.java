@@ -11,10 +11,8 @@ import com.hichamea.todolist.validator.UserValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Service implementation for managing user-related operations.
@@ -23,6 +21,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
+
+    private static final String USER_NOT_FOUND_ERROR = "User not found with ID: %d";
 
     private final UserRepository userRepository;
 
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     public UserDto findUserById(Long userId) {
         log.info("Fetching user with ID: {}", userId);
         User userFound = userRepository.findById(userId)
-                                       .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+                                       .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_ERROR + userId));
         log.info("User found with ID: {}", userId);
         return UserDto.fromEntity(userFound);
     }
@@ -63,8 +63,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto updateUser(Long userId, UserDto updatedUserDto) {
-        List<String> validationMessages = UserValidator.validateUserFields(updatedUserDto);
+    public UserDto updateUser(Long userId, UserDto user) {
+        List<String> validationMessages = UserValidator.validateUserFields(user);
 
         if (!validationMessages.isEmpty()) {
             log.error("Failed to update user with ID {} due to validation errors: {}", userId, validationMessages);
@@ -72,25 +72,24 @@ public class UserServiceImpl implements UserService {
         }
 
         User userToUpdate = userRepository.findById(userId)
-                                          .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + userId));
+                                          .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_ERROR + userId));
 
-        updateUserData(userToUpdate, updatedUserDto);
+        updateUserData(userToUpdate, user);
 
         UserDto updatedUser = UserDto.fromEntity(userRepository.save(userToUpdate));
-        log.info("User with ID {} successfully updated.", updatedUser.getId());
+        log.info("User with ID {} successfully updated.", user.getId());
         return updatedUser;
     }
 
     @Override
     public void deleteUserById(Long userId) {
+        Objects.requireNonNull(userId, "User ID cannot be null");
         log.warn("Attempting to delete user with ID: {}", userId);
 
-        if (!userRepository.existsById(userId)) {
-            log.warn("User with ID {} not found. Deletion skipped.", userId);
-            return;
-        }
+        User userToDelete = userRepository.findById(userId)
+                                          .orElseThrow(() -> new EntityNotFoundException(USER_NOT_FOUND_ERROR + userId));
 
-        userRepository.deleteById(userId);
+        userRepository.deleteById(userToDelete.getId());
         log.info("User with ID {} successfully deleted.", userId);
     }
 
