@@ -69,7 +69,7 @@ public class UserController {
      */
     @PutMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> updateUser(@PathVariable Long userId, @RequestBody UserDto user) {
-        return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.updateUser(userId, user), HttpStatus.OK);
     }
 
     /**

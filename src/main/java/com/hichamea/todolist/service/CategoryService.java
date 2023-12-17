@@ -31,6 +31,7 @@ public interface CategoryService {
      *
      * @param category The CategoryDto containing data for creating a new category.
      * @return A CategoryDto representing the created category.
+     * @throws InvalidEntityException If the provided CategoryDto contains invalid data.
      */
     CategoryDto saveCategory(CategoryDto category);
 
@@ -49,7 +50,7 @@ public interface CategoryService {
      * Deletes a category by ID.
      *
      * @param categoryId The ID of the category to delete.
-     * @throws EntityNotFoundException  If the category with the specified ID is not found.
+     * @throws EntityNotFoundException If the category with the specified ID is not found.
      */
     void deleteCategoryById(Long categoryId);
 }
