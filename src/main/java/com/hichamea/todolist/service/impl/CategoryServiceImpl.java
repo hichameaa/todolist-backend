@@ -10,6 +10,7 @@ import com.hichamea.todolist.validator.CategoryValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -92,6 +93,31 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.deleteById(categoryToDelete.getId());
         log.info("Category with ID {} successfully deleted.", categoryId);
+    }
+
+    @Override
+    public List<CategoryDto> findAllCategoriesByUserId(Long userId) {
+        log.info("Fetching all categories for user with ID: {}", userId);
+        List<CategoryDto> categories = categoryRepository.findCategoryByUserId(userId).stream()
+                                                         .map(CategoryDto::fromEntity)
+                                                         .toList();
+        log.info("Found {} categories for user with ID: {}", categories.size(), userId);
+        return categories;
+    }
+
+    @Override
+    public List<CategoryDto> findAllTodosByCategoriesForToday(Long userId) {
+        log.info("Fetching all todos for today by categories for user with ID: {}", userId);
+        List<CategoryDto> todos = categoryRepository.findAllTodosByCategoriesForToday(ZonedDateTime.now()
+                                                                                                   .withHour(0)
+                                                                                                   .withMinute(0), ZonedDateTime.now()
+                                                                                                                                .withHour(23)
+                                                                                                                                .withMinute(59), userId)
+                                                    .stream()
+                                                    .map(CategoryDto::fromEntity)
+                                                    .toList();
+        log.info("Found {} todos for user with ID: {}", todos.size(), userId);
+        return todos;
     }
 
     private void updateCategoryData(Category categoryToUpdate, CategoryDto category) {
