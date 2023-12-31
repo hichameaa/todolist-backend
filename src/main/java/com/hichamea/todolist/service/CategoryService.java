@@ -53,4 +53,20 @@ public interface CategoryService {
      * @throws EntityNotFoundException If the category with the specified ID is not found.
      */
     void deleteCategoryById(Long categoryId);
+
+    /**
+     * Retrieves all categories associated with a user.
+     *
+     * @param userId The ID of the user.
+     * @return A list of CategoryDto representing all categories associated with the user.
+     */
+    List<CategoryDto> findAllCategoriesByUserId(Long userId);
+
+    /**
+     * Retrieves all to-do items for today for a specific user across multiple categories.
+     *
+     * @param userId The ID of the user for which to retrieve to-do items.
+     * @return A list of TodoDto representing the retrieved to-do items for today.
+     */
+    List<CategoryDto> findAllTodosByCategoriesForToday(Long userId);
 }
