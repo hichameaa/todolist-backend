@@ -1,7 +1,9 @@
 package com.hichamea.todolist.controller;
 
 import com.hichamea.todolist.dto.CategoryDto;
+import com.hichamea.todolist.dto.TodoDto;
 import com.hichamea.todolist.service.CategoryService;
+import com.hichamea.todolist.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,17 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    private final TodoService todoService;
+
     /**
      * Constructor for CategoryController.
      *
      * @param categoryService The service responsible for category-related operations.
+     * @param todoService     The service responsible for to-do-related operations.
      */
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryService categoryService, TodoService todoService) {
         this.categoryService = categoryService;
+        this.todoService = todoService;
     }
 
     /**
@@ -82,5 +88,38 @@ public class CategoryController {
     public ResponseEntity<CategoryDto> deleteCategory(@PathVariable Long categoryId) {
         categoryService.deleteCategoryById(categoryId);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Retrieves all Todos for a specific category.
+     *
+     * @param categoryId The ID of the category for which to retrieve Todos.
+     * @return ResponseEntity with a list of TodoDto and HTTP status.
+     */
+    @GetMapping(value = "/{categoryId}/todos", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TodoDto>> getAllTodosByCategory(Long categoryId) {
+        return new ResponseEntity<>(todoService.findAllTodosByCategory(categoryId), HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves all Categories for a specific user.
+     *
+     * @param userId The ID of the user for which to retrieve Categories.
+     * @return ResponseEntity with a list of CategoryDto and HTTP status.
+     */
+    @GetMapping(value = "users/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CategoryDto>> getAllCategoriesByUserId(Long userId) {
+        return new ResponseEntity<>(categoryService.findAllCategoriesByUserId(userId), HttpStatus.OK);
+    }
+
+    /**
+     * Retrieves all Todos for today for a specific user.
+     *
+     * @param userId The ID of the user for which to retrieve Todos.
+     * @return ResponseEntity with a list of TodoDto and HTTP status.
+     */
+    @GetMapping(value = "todos/today/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CategoryDto>> getAllTodosByCategoriesForToday(@PathVariable Long userId) {
+        return new ResponseEntity<>(categoryService.findAllTodosByCategoriesForToday(userId), HttpStatus.OK);
     }
 }
