@@ -53,4 +53,16 @@ public class Todo {
     @JoinColumn(name = "categoryId")
     @JsonIgnore
     private Category category;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createdDate = new Date();
+        updatedDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedDate = new Date();
+    }
 }
