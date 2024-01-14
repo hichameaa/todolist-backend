@@ -13,6 +13,13 @@ import java.util.Optional;
  * for Category entities with a primary key of type Long.
  */
 public interface TodoRepository extends JpaRepository<Todo, Long> {
+
+    /**
+     * Finds todos by category ID.
+     *
+     * @param categoryId The ID of the category for which to retrieve todos.
+     * @return A list of todos belonging to the specified category.
+     */
     List<Todo> findTodoByCategoryId(Long categoryId);
 
 }
