@@ -1,5 +1,3 @@
-# todolist-backend
-
 # Todo List API
 
 ## Description
